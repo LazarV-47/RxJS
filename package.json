@@ -1,0 +1,24 @@
+{
+  "name": "rwa-rxjs",
+  "version": "1.0.0",
+  "description": "Digimon app",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack --watch --config webpack.config.js",
+    "dbStart": "json-server --watch db.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.5.2",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.1",
+    "rxjs": "^7.8.1"
+  }
+}

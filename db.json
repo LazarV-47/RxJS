@@ -1,0 +1,485 @@
+{
+    "digimons": [
+      {
+        "id": 1,
+        "name": "Botamon",
+        "image": "images\\Botamon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Slime",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Koromon"]
+      },
+      {
+        "id": 2,
+        "name": "Koromon",
+        "image": "images\\Koromon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["Botamon"],
+        "nextEvolutions": ["Agumon"]
+      },
+      {
+        "id": 3,
+        "name": "Agumon",
+        "image": "images\\Agumon.png",
+        "level": "Child",
+        "attribute": "Vaccine",
+        "type": "Reptile",
+        "prevEvolutions": ["Koromon"],
+        "nextEvolutions": ["Greymon"]
+      },
+      {
+        "id": 4,
+        "name": "Greymon",
+        "image": "images\\Greymon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Dinosaur",
+        "prevEvolutions": ["Agumon"],
+        "nextEvolutions": ["MetalGreymon"]
+      },
+      {
+        "id": 5,
+        "name": "MetalGreymon",
+        "image": "images\\Metal_Greymon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Cyborg",
+        "prevEvolutions": ["Greymon"],
+        "nextEvolutions": ["WarGreymon"]
+      },
+      {
+        "id": 6,
+        "name": "WarGreymon",
+        "image": "images\\War_Greymon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Dragon Man",
+        "prevEvolutions": ["MetalGreymon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 7,
+        "name": "Punimon",
+        "image": "images\\Punimon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Slime",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Tsunomon"]
+      },
+      {
+        "id": 8,
+        "name": "Tsunomon",
+        "image": "images\\Tsunomon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["Punimon"],
+        "nextEvolutions": ["Gabumon"]
+      },
+      {
+        "id": 9,
+        "name": "Gabumon",
+        "image": "images\\Gabumon.png",
+        "level": "Child",
+        "attribute": "Data",
+        "type": "Reptile",
+        "prevEvolutions": ["Tsunomon"],
+        "nextEvolutions": ["Garurumon"]
+      },
+      {
+        "id": 10,
+        "name": "Garurumon",
+        "image": "images\\Garurumon.png",
+        "level": "Adult",
+        "attribute": "Data",
+        "type": "Beast",
+        "prevEvolutions": ["Gabumon"],
+        "nextEvolutions": ["WereGarurumon"]
+      },
+      {
+        "id": 11,
+        "name": "WereGarurumon",
+        "image": "images\\Were_Garurumon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Beast Man",
+        "prevEvolutions": ["Garurumon"],
+        "nextEvolutions": ["MetalGarurumon"]
+      },
+      {
+        "id": 12,
+        "name": "MetalGarurumon",
+        "image": "images\\Metal_Garurumon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Cyborg",
+        "prevEvolutions": ["WereGarurumon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 13,
+        "name": "Nyokimon",
+        "image": "images\\Nyokimon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Bulb",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Yokomon"]
+      },
+      {
+        "id": 14,
+        "name": "Yokomon",
+        "image": "images\\Yokomon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Bulb",
+        "prevEvolutions": ["Nyokimon"],
+        "nextEvolutions": ["Piyomon"]
+      },
+      {
+        "id": 15,
+        "name": "Piyomon",
+        "image": "images\\Piyomon.png",
+        "level": "Child",
+        "attribute": "Vaccine",
+        "type": "Bird",
+        "prevEvolutions": ["Yokomon"],
+        "nextEvolutions": ["Birdramon"]
+      },
+      {
+        "id": 16,
+        "name": "Birdramon",
+        "image": "images\\Birdramon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Bird",
+        "prevEvolutions": ["Piyomon"],
+        "nextEvolutions": ["Garudamon"]
+      },
+      {
+        "id": 17,
+        "name": "Garudamon",
+        "image": "images\\Garudamon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Bird Man",
+        "prevEvolutions": ["Birdramon"],
+        "nextEvolutions": ["Hououmon"]
+      },
+      {
+        "id": 18,
+        "name": "Hououmon",
+        "image": "images\\Hououmon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Holy Bird",
+        "prevEvolutions": ["Garudamon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 19,
+        "name": "Pabumon",
+        "image": "images\\Pabumon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Slime",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Motimon"]
+      },
+      {
+        "id": 20,
+        "name": "Motimon",
+        "image": "images\\Motimon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["Pabumon"],
+        "nextEvolutions": ["Tentomon"]
+      },
+      {
+        "id": 21,
+        "name": "Tentomon",
+        "image": "images\\Tentomon.png",
+        "level": "Child",
+        "attribute": "Vaccine",
+        "type": "Insect",
+        "prevEvolutions": ["Motimon"],
+        "nextEvolutions": ["Kabuterimon"]
+      },
+      {
+        "id": 22,
+        "name": "Kabuterimon",
+        "image": "images\\Kabuterimon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Insect",
+        "prevEvolutions": ["Tentomon"],
+        "nextEvolutions": ["MegaKabuterimon"]
+      },
+      {
+        "id": 23,
+        "name": "MegaKabuterimon",
+        "image": "images\\MegaKabuterimon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Insect",
+        "prevEvolutions": ["Kabuterimon"],
+        "nextEvolutions": ["HerculesKabuterimon"]
+      },
+      {
+        "id": 24,
+        "name": "HerculesKabuterimon",
+        "image": "images\\HerculesKabuterimon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Insect",
+        "prevEvolutions": ["MegaKabuterimon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 25,
+        "name": "Yuramon",
+        "image": "images\\Yuramon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Plant",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Tanemon"]
+      },
+      {
+        "id": 26,
+        "name": "Tanemon",
+        "image": "images\\Tanemon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Bulb",
+        "prevEvolutions": ["Yuramon"],
+        "nextEvolutions": ["Palmon"]
+      },
+      {
+        "id": 27,
+        "name": "Palmon",
+        "image": "images\\Palmon.png",
+        "level": "Child",
+        "attribute": "Data",
+        "type": "Plant",
+        "prevEvolutions": ["Tanemon"],
+        "nextEvolutions": ["Togemon"]
+      },
+      {
+        "id": 28,
+        "name": "Togemon",
+        "image": "images\\Togemon.png",
+        "level": "Adult",
+        "attribute": "Data",
+        "type": "Plant",
+        "prevEvolutions": ["Palmon"],
+        "nextEvolutions": ["Lillymon"]
+      },
+      {
+        "id": 29,
+        "name": "Lillymon",
+        "image": "images\\Lillymon.png",
+        "level": "Perfect",
+        "attribute": "Data",
+        "type": "Fairy",
+        "prevEvolutions": ["Togemon"],
+        "nextEvolutions": ["Rosemon"]
+      },
+      {
+        "id": 30,
+        "name": "Rosemon",
+        "image": "images\\Rosemon.png",
+        "level": "Ultimate",
+        "attribute": "Data",
+        "type": "Fairy",
+        "prevEvolutions": ["Lillymon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 31,
+        "name": "Pichimon",
+        "image": "images\\Pichimon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Slime",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Bukamon"]
+      },
+      {
+        "id": 32,
+        "name": "Bukamon",
+        "image": "images\\Bukamon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["Pichimon"],
+        "nextEvolutions": ["Gomamon"]
+      },
+      {
+        "id": 33,
+        "name": "Gomamon",
+        "image": "images\\Gomamon.png",
+        "level": "Child",
+        "attribute": "Vaccine",
+        "type": "Sea Animal",
+        "prevEvolutions": ["Bukamon"],
+        "nextEvolutions": ["Ikkakumon"]
+      },
+      {
+        "id": 34,
+        "name": "Ikkakumon",
+        "image": "images\\Ikkakumon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Sea Animal",
+        "prevEvolutions": ["Gomamon"],
+        "nextEvolutions": ["Zudomon"]
+      },
+      {
+        "id": 35,
+        "name": "Zudomon",
+        "image": "images\\Zudomon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Sea Animal",
+        "prevEvolutions": ["Ikkakumon"],
+        "nextEvolutions": ["Vikemon"]
+      },
+      {
+        "id": 36,
+        "name": "Vikemon",
+        "image": "images\\Vikemon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Sea Animal",
+        "prevEvolutions": ["Zudomon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 37,
+        "name": "Poyomon",
+        "image": "images\\Poyomon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Slime",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Tokomon"]
+      },
+      {
+        "id": 38,
+        "name": "Tokomon",
+        "image": "images\\Tokomon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["Poyomon"],
+        "nextEvolutions": ["Patamon"]
+      },
+      {
+        "id": 39,
+        "name": "Patamon",
+        "image": "images\\Patamon.png",
+        "level": "Child",
+        "attribute": "Data",
+        "type": "Mammal",
+        "prevEvolutions": ["Tokomon"],
+        "nextEvolutions": ["Angemon"]
+      },
+      {
+        "id": 40,
+        "name": "Angemon",
+        "image": "images\\Angemon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Angel",
+        "prevEvolutions": ["Patamon"],
+        "nextEvolutions": ["MagnaAngemon"]
+      },
+      {
+        "id": 41,
+        "name": "MagnaAngemon",
+        "image": "images\\MagnaAngemon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Angel",
+        "prevEvolutions": ["Angemon"],
+        "nextEvolutions": ["Seraphimon"]
+      },
+      {
+        "id": 42,
+        "name": "Seraphimon",
+        "image": "images\\Seraphimon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Seraph",
+        "prevEvolutions": ["MagnaAngemon"],
+        "nextEvolutions": []
+      },
+      {
+        "id": 43,
+        "name": "YukimiBotamon",
+        "image": "images\\Yukimi_Botamon.png",
+        "level": "Baby",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": [],
+        "nextEvolutions": ["Nyaromon"]
+      },
+      {
+        "id": 44,
+        "name": "Nyaromon",
+        "image": "images\\Nyaromon.png",
+        "level": "Baby II",
+        "attribute": "None",
+        "type": "Lesser",
+        "prevEvolutions": ["YukimiBotamon"],
+        "nextEvolutions": ["Salamon"]
+      },
+      {
+        "id": 45,
+        "name": "Salamon",
+        "image": "images\\Salamon.png",
+        "level": "Child",
+        "attribute": "Vaccine",
+        "type": "Mammal",
+        "prevEvolutions": ["Nyaromon"],
+        "nextEvolutions": ["Gatomon"]
+      },
+      {
+        "id": 46,
+        "name": "Gatomon",
+        "image": "images\\Gatomon.png",
+        "level": "Adult",
+        "attribute": "Vaccine",
+        "type": "Holy Beast",
+        "prevEvolutions": ["Salamon"],
+        "nextEvolutions": ["Angewomon"]
+      },
+      {
+        "id": 47,
+        "name": "Angewomon",
+        "image": "images\\Angewomon.png",
+        "level": "Perfect",
+        "attribute": "Vaccine",
+        "type": "Angel",
+        "prevEvolutions": ["Gatomon"],
+        "nextEvolutions": ["Magnadramon"]
+      },
+      {
+        "id": 48,
+        "name": "Magnadramon",
+        "image": "images\\Magnadramon.png",
+        "level": "Ultimate",
+        "attribute": "Vaccine",
+        "type": "Holy Dragon",
+        "prevEvolutions": ["Angewomon"],
+        "nextEvolutions": []
+      }
+    ]
+  }
+  
