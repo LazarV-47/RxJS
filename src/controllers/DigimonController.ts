@@ -36,38 +36,19 @@ export class DigimonController {
                 if(digimon){
                     this.view.renderDigimonDetail(digimon);
                 };
-            });
+        });
             
+
         this.view.bindNavigationClick()
-            .pipe(
-                switchMap((direction: string) => {
-                    if (!direction) return of(null);
-                    return new Observable<Digimon>(observer => {
-                    setTimeout(() => {
-                        const detailElement = this.view.getDigimonList().querySelector(".digimon-detail");
-                        console.log('querySelector result:', detailElement); 
-                        if (detailElement) {
-                            const currentDigimonId = parseInt(detailElement.getAttribute("data-id") || "0");
-                            Digimon.fetchById(currentDigimonId).pipe(
-                                switchMap(digimon => {
-                                    const evolutionNames = direction === "prev" ? digimon.getPreviousEvolutions() : digimon.getNextEvolutions();
-                                    if (evolutionNames.length > 0) {
-                                        const evolutionName = evolutionNames[0]; 
-                                        return Digimon.fetchSingleByName(evolutionName);
-                                    }
-                                    return new Observable<Digimon>();
-                                })
-                            ).subscribe(digimon => {
-                                observer.next(digimon);
-                                observer.complete();
-                            });
-                        } else {
-                            observer.complete();
-                        }
-                    }, 100); // Adjust the delay if necessary
-                });
-            })
-        ).subscribe(digimon => {
+        .pipe(
+            switchMap((direction: string) => 
+                this.getCurrentDigimon(direction).pipe(
+                    map(digimon => ({digimon, direction}))
+                )
+            ),
+            switchMap(({digimon, direction}) => this.getEvolutionDigimon(digimon, direction))
+        )
+        .subscribe(digimon => {
             if (digimon) {
                 this.view.renderDigimonDetail(digimon);
             }
@@ -86,6 +67,30 @@ export class DigimonController {
 
     fetchAllDigimons(): Observable<Digimon[]> {
         return Digimon.fetchByName();
+    }
+
+    private getCurrentDigimon(direction: string): Observable<Digimon | null> {
+        if (!direction) return of(null);
+
+        const detailElement = this.view.getDigimonList().querySelector(".digimon-detail");
+        if (detailElement) {
+            const currentDigimonId = parseInt(detailElement.getAttribute("data-id") || "0");
+            return Digimon.fetchById(currentDigimonId);
+        }
+
+        return of(null);
+    }
+
+    private getEvolutionDigimon(digimon: Digimon | null, direction: string): Observable<Digimon | null> {
+        if (!digimon) return of(null);
+
+        const evolutionNames = direction === "prev" ? digimon.getPreviousEvolutions() : digimon.getNextEvolutions();
+        if (evolutionNames.length > 0) {
+            const evolutionName = evolutionNames[0];
+            return Digimon.fetchSingleByName(evolutionName);
+        }
+
+        return of(null);
     }
 
 }
