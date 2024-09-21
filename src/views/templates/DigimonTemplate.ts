@@ -16,6 +16,28 @@ export const createDigimonTile = (digimon: Digimon): HTMLDivElement => {
     digimonName.textContent = digimon.name;
     digimonTile.appendChild(digimonName);
 
+
+    const labelWrapper = document.createElement("label");
+    labelWrapper.classList.add("digimon-compare-label");
+
+    const checkboxCompare = document.createElement("input");
+    checkboxCompare.type = "checkbox";
+    checkboxCompare.classList.add("digimon-compare-checkbox");
+    checkboxCompare.setAttribute("data-id", digimon.id.toString());
+
+    const compareText = document.createElement("span");
+    compareText.textContent = "Compare";
+    compareText.classList.add("digimon-compare-text");
+
+    labelWrapper.appendChild(checkboxCompare);
+    labelWrapper.appendChild(compareText);
+    
+    digimonTile.appendChild(labelWrapper);
+
+    labelWrapper.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+
     return digimonTile;
 }
 
@@ -67,6 +89,39 @@ export const createDigimonDetail = (digimon: Digimon): HTMLDivElement => {
 
     return digimonDetail;
 }
+
+export const createDigimonCompareTile = (digimon: Digimon): HTMLDivElement => {
+    const digimonCard: HTMLDivElement = document.createElement("div");
+    digimonCard.classList.add("digimon-card");
+
+    const digimonImg: HTMLImageElement = document.createElement("img");
+    digimonImg.src = digimon.image;
+    digimonImg.alt = digimon.name;
+    digimonImg.classList.add("digimonImg-tile");
+    digimonCard.appendChild(digimonImg);
+
+    const digimonName: HTMLParagraphElement = document.createElement("p");
+    digimonName.classList.add("digimon-name-tile");
+    digimonName.innerHTML = `<strong>Name:</strong> ${digimon.name}`;
+    digimonCard.appendChild(digimonName);
+
+    const digimonLevel: HTMLParagraphElement = document.createElement("p");
+    digimonLevel.classList.add("digimon-level-tile");
+    digimonLevel.innerHTML = `<strong>Level:</strong> ${digimon.level}`;
+    digimonCard.appendChild(digimonLevel);
+
+    const digimonAttribute: HTMLParagraphElement = document.createElement("p");
+    digimonAttribute.classList.add("digimon-attribute-tile");
+    digimonAttribute.innerHTML = `<strong>Attribute:</strong> ${digimon.attribute}`;
+    digimonCard.appendChild(digimonAttribute);
+
+    const digimonType: HTMLParagraphElement = document.createElement("p");
+    digimonType.classList.add("digimon-type-tile");
+    digimonType.innerHTML = `<strong>Type:</strong> ${digimon.type}`;
+    digimonCard.appendChild(digimonType);
+
+    return digimonCard;
+};
 
 
 function createAttribute(cont: HTMLElement, label: string, value: string){

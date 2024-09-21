@@ -1,10 +1,11 @@
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, map, withLatestFrom } from "rxjs/operators";
 import { DigimonView } from "../views/DigimonView";
 import { Digimon } from "../models/Digimon";
-import { Observable, of } from "rxjs";
+import { Observable, of, forkJoin } from "rxjs";
 
 export class DigimonController {
     private view: DigimonView;
+    private selectedDigimon$: Observable<number[]>;
 
     constructor(view: DigimonView) {
         this.view = view;
@@ -13,19 +14,29 @@ export class DigimonController {
             .pipe(
                 switchMap(searchTerm => Digimon.fetchByName(searchTerm))
             )
-            .subscribe(digimons => this.view.renderDigimons(digimons));
+            .subscribe(digimons => {
+                this.view.renderDigimons(digimons);
+                this.bindDigimonSelectionAfterRender();
+            });
 
             
         this.view.bindResetClick()
         .pipe(
             switchMap( () => Digimon.fetchByName())
         )
-        .subscribe(digimons => this.view.renderDigimons(digimons));
+        .subscribe(digimons => {
+            this.view.renderDigimons(digimons);
+            this.bindDigimonSelectionAfterRender();
+        });
         
         
         this.view.bindCheckboxes().pipe(
             switchMap((types: string[]) => types.length ? this.fetchByTypes(types) : this.fetchAllDigimons())
-        ).subscribe(digimons => view.renderDigimons(digimons));
+        )
+        .subscribe(digimons => {
+            this.view.renderDigimons(digimons);
+            this.bindDigimonSelectionAfterRender();
+        });
             
             
         this.view.bindDigimonClick()
@@ -55,7 +66,25 @@ export class DigimonController {
         });
 
 
-        Digimon.fetchByName().subscribe(digimons => this.view.renderDigimons(digimons));
+        this.view.bindCompareClick()
+            .subscribe(() => {
+                let selectedDigimons = this.view.getSelectedDigimons();
+
+                if (selectedDigimons.length >= 2 && selectedDigimons.length <= 4) {
+                    const selectedDigimonIdsAsNumbers = selectedDigimons.map(id => Number(id));
+                    this.view.showCompareModal(selectedDigimonIdsAsNumbers);
+                } else {
+                    alert('Please select between 2 and 4 Digimon for comparison.');
+                }
+        });
+        
+
+            
+
+        Digimon.fetchByName().subscribe(digimons => {
+            this.view.renderDigimons(digimons);
+            this.bindDigimonSelectionAfterRender();
+        });
     }
 
     //Helper functions
@@ -68,6 +97,11 @@ export class DigimonController {
     fetchAllDigimons(): Observable<Digimon[]> {
         return Digimon.fetchByName();
     }
+
+    bindDigimonSelectionAfterRender() {
+        this.selectedDigimon$ = this.view.bindDigimonSelection();
+    }
+
 
     private getCurrentDigimon(direction: string): Observable<Digimon | null> {
         if (!direction) return of(null);
@@ -91,6 +125,17 @@ export class DigimonController {
         }
 
         return of(null);
+    }
+
+
+    handleComparison() {
+        this.selectedDigimon$.subscribe(selectedDigimons => {
+            if (selectedDigimons.length >= 2 && selectedDigimons.length <= 4) {
+                this.view.showCompareModal(selectedDigimons);
+            } else {
+                alert('Please select between 2 and 4 Digimon for comparison.');
+            }
+        });
     }
 
 }

@@ -1,7 +1,7 @@
-import { Observable, fromEvent, merge} from "rxjs";
-import { debounceTime, map } from "rxjs/operators";
+import { Observable, fromEvent, merge, forkJoin} from "rxjs";
+import { debounceTime, map, scan } from "rxjs/operators";
 import { Digimon } from "../models/Digimon";
-import { createDigimonDetail, createDigimonTile } from "./templates/DigimonTemplate";
+import { createDigimonDetail, createDigimonTile, createDigimonCompareTile } from "./templates/DigimonTemplate";
 
 export class DigimonView{
     private digimonList: HTMLDivElement;
@@ -9,6 +9,7 @@ export class DigimonView{
     private resetBtn: HTMLElement;
     private checkBoxContainer: HTMLDivElement;
     private checkBoxes: HTMLInputElement[] = [];
+    private compareBtn: HTMLElement;
 
     constructor(container: HTMLElement){
         this.digimonList = document.createElement("div");
@@ -28,6 +29,12 @@ export class DigimonView{
         this.searchInput.name = "digimon-search";
         this.searchInput.placeholder = "Search Digimon";
         searchContainer.appendChild(this.searchInput);
+
+        this.compareBtn = document.createElement("button");
+        this.compareBtn.classList.add("compare-btn");
+        this.compareBtn.innerHTML = "Compare";
+        searchContainer.appendChild(this.compareBtn);
+
 
         this.checkBoxContainer = document.createElement("div");
         this.checkBoxContainer.classList.add("checkbox-container");
@@ -98,6 +105,30 @@ export class DigimonView{
     }
 
 
+    bindDigimonSelection(): Observable<number[]> {
+        const checkboxes = document.querySelectorAll(".digimon-compare-checkbox");
+    
+        checkboxes.forEach(checkbox => {
+            fromEvent(checkbox, "change").subscribe(() => {
+                const selected = this.getSelectedDigimons();
+    
+                if (selected.length > 4) {
+                    alert("You can only select up to 4 Digimon for comparison.");
+                    (checkbox as HTMLInputElement).checked = false;
+                }
+            });
+        });
+
+        return fromEvent(checkboxes, "change").pipe(
+            map(() => this.getSelectedDigimons().map(Number))
+        );
+    }
+
+    
+    bindCompareClick(): Observable<Event> {
+        return fromEvent(this.compareBtn, "click");
+    }
+
     //Render block
 
     renderDigimons(digimons: Digimon[]): void {
@@ -114,6 +145,51 @@ export class DigimonView{
         this.clearSearchBar();
         const digimonDetail = createDigimonDetail(digimon)
         this.digimonList.appendChild(digimonDetail);
+    }
+
+
+    showCompareModal(digimonIds: number[]): void {
+        const modalOverlay = document.createElement("div");
+        modalOverlay.classList.add("modal-overlay");
+    
+        const digimonObservables = digimonIds.map(id => Digimon.fetchById(id));
+    
+        forkJoin(digimonObservables).subscribe(digimons => {
+            const modalContainer = document.createElement("div");
+            modalContainer.classList.add("modal-container");
+    
+            digimons.forEach(digimon => {
+                const digimonCard = createDigimonCompareTile(digimon);
+                modalContainer.appendChild(digimonCard);
+            });
+    
+            const closeButton = document.createElement("button");
+            closeButton.classList.add("modal-close-button");
+            closeButton.textContent = "X";
+            modalContainer.appendChild(closeButton);
+    
+            modalOverlay.appendChild(modalContainer);
+            document.body.appendChild(modalOverlay);
+            modalOverlay.style.display = "block";
+    
+            fromEvent(closeButton, "click").subscribe(() => this.closeModal(modalOverlay));
+    
+            fromEvent(modalOverlay, "click").subscribe((event: Event) => {
+                if (event.target === modalOverlay) {
+                    this.closeModal(modalOverlay);
+                }
+            });
+        });
+    }
+
+    private closeModal(modalOverlay: HTMLElement): void {
+        modalOverlay.style.display = "none";
+        document.body.removeChild(modalOverlay);
+
+        const checkboxes = document.querySelectorAll(".digimon-compare-checkbox");
+        checkboxes.forEach(checkbox => {
+            (checkbox as HTMLInputElement).checked = false;
+        });
     }
 
 
@@ -153,10 +229,29 @@ export class DigimonView{
         this.searchInput.value = '';
     }
 
+
+    
+
     uncheckAllCheckboxes() {
         this.checkBoxes.forEach(checkbox => {
             checkbox.checked = false;
         });
+    }
+
+    getSelectedDigimons(): string[] {
+        const selectedDigimons: string[] = [];
+        const checkboxes = document.querySelectorAll(".digimon-compare-checkbox");
+
+        checkboxes.forEach(checkbox => {
+            const inputElement = checkbox as HTMLInputElement;
+            if (inputElement.checked) {
+                const digimonId = inputElement.getAttribute('data-id');
+                if (digimonId) {
+                    selectedDigimons.push(digimonId);
+                }
+            }
+        });
+        return selectedDigimons;
     }
 
 }
