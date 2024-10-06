@@ -1,5 +1,5 @@
 import { from, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 
 export class Digimon{
     id: number;
@@ -21,30 +21,39 @@ export class Digimon{
         this.prevEvolutions = data.prevEvolutions || [];
         this.nextEvolutions = data.nextEvolutions || [];
     }
-    static fetchByName(searchTerm:string = ""): Observable<Digimon[]>{
-        return from(fetch("http://localhost:3000/digimons").then(response => response.json()))
-        .pipe(
-            map(digimons => digimons
-                .filter((digimon: any) => digimon.name.toLowerCase().includes(searchTerm.toLowerCase()))
-                .map((digimonData: any) => new Digimon(digimonData))
-            )
-        );
+
+    static fetchByName(searchTerm: string = ""): Observable<Digimon[]> {
+        return from(fetch("http://localhost:3000/digimons"))
+            .pipe(
+                switchMap((response: Response) => response.json()),
+                map((digimons: Digimon[]) =>
+                    digimons
+                        .filter((digimon: Digimon) => digimon.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .map((digimonData: Digimon) => new Digimon(digimonData))
+                )
+            );
     }
 
-    static fetchById(id: number): Observable<Digimon>{
-        return from(fetch(`http://localhost:3000/digimons/${id}`).then(response => response.json()))
-        .pipe(
-            map(digimonData => new Digimon(digimonData))
-        );
+    static fetchById(id: number): Observable<Digimon> {
+        return from(fetch(`http://localhost:3000/digimons/${id}`))
+            .pipe(
+                switchMap((response: Response) => response.json()),
+                map((digimonData: Digimon) => new Digimon(digimonData))
+            );
     }
 
     static fetchSingleByName(name: string): Observable<Digimon> {
-        return from(fetch(`http://localhost:3000/digimons`)
-            .then(response => response.json()))
-            .pipe(map(data => {
-                const digimonData = data.find((digimon: any) => digimon.name.toLowerCase() === name.toLowerCase());
-                return new Digimon(digimonData);
-            }));
+        return from(fetch("http://localhost:3000/digimons"))
+            .pipe(
+                switchMap((response: Response) => response.json()),
+                map((data: Digimon[]) => {
+                    const digimonData:Digimon = data.find(digimon => digimon.name.toLowerCase() === name.toLowerCase());
+                    if (!digimonData) {
+                        throw new Error('Digimon not found');
+                    }
+                    return new Digimon(digimonData);
+                })
+            );
     }
 
     getPreviousEvolutions(): string[] {

@@ -260,3 +260,20 @@ body {
     margin: 5px 0;
 }
 
+.scrollTop-btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.scrollTop-btn:hover {
+    background-color: #e68900;
+}

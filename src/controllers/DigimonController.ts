@@ -78,7 +78,8 @@ export class DigimonController {
                 }
         });
         
-
+        
+        this.view.bindScrollToTopButtonEvents();
             
 
         Digimon.fetchByName().subscribe(digimons => {

@@ -1,5 +1,5 @@
 import { Observable, fromEvent, merge, forkJoin} from "rxjs";
-import { debounceTime, map, scan } from "rxjs/operators";
+import { debounceTime, map, scan, throttleTime } from "rxjs/operators";
 import { Digimon } from "../models/Digimon";
 import { createDigimonDetail, createDigimonTile, createDigimonCompareTile } from "./templates/DigimonTemplate";
 
@@ -10,6 +10,7 @@ export class DigimonView{
     private checkBoxContainer: HTMLDivElement;
     private checkBoxes: HTMLInputElement[] = [];
     private compareBtn: HTMLElement;
+    private scrollToTopBtn: HTMLElement;
 
     constructor(container: HTMLElement){
         this.digimonList = document.createElement("div");
@@ -45,6 +46,12 @@ export class DigimonView{
         container.appendChild(this.digimonList);
 
         this.addCheckBoxes();
+
+        this.scrollToTopBtn = document.createElement('button');
+        this.scrollToTopBtn.classList.add("scrollTop-btn");
+        this.scrollToTopBtn.innerText = '^';
+        container.appendChild(this.scrollToTopBtn);
+        this.scrollToTopBtn.style.display = "none";
     }
 
     //Binder block
@@ -85,8 +92,9 @@ export class DigimonView{
     bindNavigationClick(): Observable<string> {
         return fromEvent(document.body, "click")
             .pipe(
-                map((event: any) => {
-                    const arrow = event.target.closest(".navigation-arrow");
+                map((event: MouseEvent) => {
+                    const target = event.target as HTMLElement;
+                    const arrow = target.closest(".navigation-arrow");
                     return arrow ? arrow.getAttribute("data-direction") : "";
                 })
             );
@@ -129,6 +137,27 @@ export class DigimonView{
         return fromEvent(this.compareBtn, "click");
     }
 
+
+    public bindScrollToTopButtonEvents(): void {
+        if (!this.scrollToTopBtn) return;
+
+        const scroll$ = fromEvent(window, 'scroll').pipe(
+            throttleTime(200),
+            map(() => window.scrollY > 300)
+        );
+
+        scroll$.subscribe(isVisible => {
+            if (this.scrollToTopBtn) {
+                this.scrollToTopBtn.style.display = isVisible ? 'block' : 'none';
+            }
+        });
+
+        const click$ = fromEvent(this.scrollToTopBtn, 'click');
+        click$.subscribe(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+    
     //Render block
 
     renderDigimons(digimons: Digimon[]): void {
@@ -139,7 +168,7 @@ export class DigimonView{
         });
     }
 
-    renderDigimonDetail(digimon: Digimon):void {
+    renderDigimonDetail(digimon: Digimon): void {
         this.digimonList.innerHTML = "";
         this.uncheckAllCheckboxes();
         this.clearSearchBar();
@@ -152,13 +181,13 @@ export class DigimonView{
         const modalOverlay = document.createElement("div");
         modalOverlay.classList.add("modal-overlay");
     
-        const digimonObservables = digimonIds.map(id => Digimon.fetchById(id));
+        const digimonObservables: Observable<Digimon>[] = digimonIds.map(id => Digimon.fetchById(id));
     
-        forkJoin(digimonObservables).subscribe(digimons => {
+        forkJoin(digimonObservables).subscribe((digimons: Digimon[]) => {
             const modalContainer = document.createElement("div");
             modalContainer.classList.add("modal-container");
     
-            digimons.forEach(digimon => {
+            digimons.forEach((digimon: Digimon) => {
                 const digimonCard = createDigimonCompareTile(digimon);
                 modalContainer.appendChild(digimonCard);
             });
@@ -199,7 +228,7 @@ export class DigimonView{
         return this.digimonList;
     }
 
-    addCheckBoxes() {
+    addCheckBoxes(): void {
         const types = [
             'Slime', 'Lesser', 'Reptile', 'Dinosaur', 'Cyborg',
             'Dragon Man', 'Bird', 'Beast', 'Fairy', 'Plant', 'Insect',
@@ -225,14 +254,14 @@ export class DigimonView{
             .map(checkBox => checkBox.value);
     }
 
-    clearSearchBar() {
+    clearSearchBar(): void {
         this.searchInput.value = '';
     }
 
 
     
 
-    uncheckAllCheckboxes() {
+    uncheckAllCheckboxes(): void {
         this.checkBoxes.forEach(checkbox => {
             checkbox.checked = false;
         });
